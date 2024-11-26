@@ -42,6 +42,7 @@ const CreatePage = () => {
                         <Input
                             {...register('repoUrl', { required: true })}
                             placeholder="Github URL"
+                            type='url'
                             required
                         />
                         <div className='h-2'></div>
