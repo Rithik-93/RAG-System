@@ -1,6 +1,7 @@
 import { Sidebar, SidebarHeader } from "@/components/ui/sidebar"
 import { LayoutDashboard, Bot, Presentation, CreditCard } from "lucide-react";
 import { usePathname } from "next/navigation"
+import { useProject } from "@/hooks/use-project"
 
 const items = [
     {
@@ -23,6 +24,7 @@ const items = [
 ]
 
 const AppSidebar = () => {
+    const {projectId, projects } = useProject();
     return (
         <Sidebar collapsible="icon" variant="floating">
             <SidebarHeader>
