@@ -23,16 +23,23 @@ export const projectRouter = createTRPCRouter({
 
         return project
     }),
-    getProject: protectedProcedure.query( async({ctx}) => {
-        return await ctx.db.project.findMany({
+    getProject: protectedProcedure.query(async ({ ctx }) => {
+        console.log("userrr", ctx.user.userId)
+        const projects = await ctx.db.project.findMany({
             where: {
                 userToProject: {
                     some: {
                         userId: ctx.user.userId!
                     }
                 },
-                deletedAt: null
+                // deletedAt: null
             }
         })
+        console.log(projects)
+        // if (!projects) {
+        //     console.log("No projects found")
+        //     return "No porjects found"
+        // }
+        return projects
     })
 })
