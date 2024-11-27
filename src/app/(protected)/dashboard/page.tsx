@@ -2,10 +2,11 @@
 import { Github, ExternalLink } from 'lucide-react'
 import Link from 'next/link';
 import { useProject } from '@/hooks/use-project'
+import CommitLog from '@/app/_components/CommitLog';
 
 const Dashboard = () => {
     const { project } = useProject()
-    console.log(project)
+    console.log(project,"project")
     return (
         <div>
             <div>
@@ -33,6 +34,7 @@ const Dashboard = () => {
                         meeting card
                     </div>
                 </div>
+                <CommitLog/>
             </div>
         </div>
     )
