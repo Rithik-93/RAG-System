@@ -1,47 +1,31 @@
-'use client'
+'use client';
+
 import {
     Sidebar, SidebarHeader, SidebarContent, SidebarGroup,
     SidebarGroupLabel, SidebarGroupContent, SidebarMenu, SidebarMenuItem,
     SidebarMenuButton
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { LayoutDashboard, Bot, Presentation, CreditCard } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation"
-import { useProject } from "@/hooks/use-project"
+import { useProject } from "@/hooks/use-project";
 
 const items = [
-    {
-        title: "Dashboard",
-        url: "/dashboard",
-        icon: LayoutDashboard,
-    }, {
-        title: "Q&A",
-        url: "/qa",
-        icon: Bot,
-    }, {
-        title: "Meetings",
-        url: "/meetings",
-        icon: Presentation,
-    }, {
-        title: "Billing",
-        url: "/billing",
-        icon: CreditCard,
-    }
-]
+    { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
+    { title: "Q&A", url: "/qa", icon: Bot },
+    { title: "Meetings", url: "/meetings", icon: Presentation },
+    { title: "Billing", url: "/billing", icon: CreditCard }
+];
 
 const AppSidebar = () => {
-    const { projectId, projects, setProjectId } = useProject();
+    const { projectId, projects = [], setProjectId } = useProject();
+
     return (
         <Sidebar collapsible="icon" variant="floating">
-            <SidebarHeader>
-                Logo
-            </SidebarHeader>
+            <SidebarHeader>Logo</SidebarHeader>
             <SidebarContent>
                 <SidebarGroup>
-                    <SidebarGroupLabel>
-                        Application
-                    </SidebarGroupLabel>
+                    <SidebarGroupLabel>Application</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {items.map((item) => (
@@ -58,33 +42,29 @@ const AppSidebar = () => {
                     </SidebarGroupContent>
                 </SidebarGroup>
                 <SidebarGroup>
-                    <SidebarGroupLabel>
-                        Your projects
-                    </SidebarGroupLabel>
+                    <SidebarGroupLabel>Your projects</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                            {projects.map(project => {
-                                return (
-                                    <SidebarMenuButton asChild>
-                                        <div onClick={() => {
-                                            setProjectId(project.id)
-                                        }}>
-                                            <div className={cn(`
-                                            rounded-sm border size-6 flex items-center justify-center text-sm bg-white text-primary`,{
+                            {projects.map((project) => (
+                                <SidebarMenuButton asChild key={project.id}>
+                                    <div onClick={() => setProjectId(project.id)}>
+                                        <div
+                                            className={cn(`
+                                            rounded-sm border size-6 flex items-center justify-center text-sm bg-white text-primary`, {
                                                 'bg-primary text-white': project.id === projectId
-                                            })}>
-                                                {project.name[0]}
-                                            </div>
+                                            })}
+                                        >
+                                            {project.name[0]}
                                         </div>
-                                    </SidebarMenuButton>
-                                )
-                            })}
+                                    </div>
+                                </SidebarMenuButton>
+                            ))}
                         </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>
             </SidebarContent>
         </Sidebar>
     );
-}
+};
 
 export default AppSidebar;

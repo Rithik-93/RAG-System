@@ -13,15 +13,16 @@ datasource db {
 }
 
 model User {
-    id            String          @id @default(cuid())
-    createdAt     DateTime        @default(now())
-    updatedAt     DateTime        @updatedAt
-    imageUrl      String?
-    firstName     String?
-    lastName      String?
-    emailAddress  String          @unique
-    credits       Int             @default(150)
-    userToProject UserToProject[]
+    id             String          @id @default(cuid())
+    createdAt      DateTime        @default(now())
+    updatedAt      DateTime        @updatedAt
+    imageUrl       String?
+    firstName      String?
+    lastName       String?
+    emailAddress   String          @unique
+    credits        Int             @default(150)
+    userToProject  UserToProject[]
+    questionsAsked Question[]
 }
 
 model Project {
@@ -36,6 +37,7 @@ model Project {
     userToProject        UserToProject[]
     commits              Commit[]
     sourceCodeEmbeddings SourceCodeEmbedding[]
+    savedQuestions       Question[]
 }
 
 model UserToProject {
@@ -66,7 +68,7 @@ model Commit {
     commitAuthorAvatar String
     commitDate         DateTime
 
-    summary String //from AI ig
+    summary String //from AI 
 }
 
 model SourceCodeEmbedding {
@@ -77,6 +79,20 @@ model SourceCodeEmbedding {
     fileName         String
     summary          String
 
+    projectId String
+    project   Project @relation(fields: [projectId], references: [id])
+}
+
+model Question {
+    id             String   @id @default(cuid())
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
+    question       String
+    answer         String
+    fileReferences Json? //I'm not sure, should review this
+
+    userId    String
+    user      User    @relation(fields: [userId], references: [id])
     projectId String
     project   Project @relation(fields: [projectId], references: [id])
 }
