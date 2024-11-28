@@ -2,6 +2,9 @@ import { Octokit } from "octokit";
 import prisma from "prisma/src";
 import axios from 'axios';
 import { summariseCommitAI } from "./AI";
+import dotenv from "dotenv";
+dotenv.config();
+
 
 export const octokit = new Octokit({
     auth: process.env.GITHUB_TOKEN
@@ -17,6 +20,9 @@ type Response = {
 
 export const getCommitHashes = async (githubUrl: string): Promise<Response[]> => {
     const [owner, repo] = githubUrl.split('/').slice(-2)
+    console.log({ owner, repo });
+    console.log("GITHUB_TOKEN is", process.env.GITHUB_TOKEN ? "present" : "missing");
+
     if (!owner || !repo) {
         throw new Error("Invalid github url")
     }

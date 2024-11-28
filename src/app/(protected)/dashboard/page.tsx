@@ -3,6 +3,7 @@ import { Github, ExternalLink } from 'lucide-react'
 import Link from 'next/link';
 import { useProject } from '@/hooks/use-project'
 import CommitLog from '@/app/_components/CommitLog';
+import AskQuestion from '@/app/_components/AskQuestion';
 
 const Dashboard = () => {
     const { project } = useProject()
@@ -23,6 +24,7 @@ const Dashboard = () => {
                                         {project?.githubUrl}
                                         <ExternalLink className='ml-1 size-4' />
                                     </Link>
+                                    <AskQuestion/>
                                 </p>
                             </div>
                         </div>

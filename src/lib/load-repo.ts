@@ -22,7 +22,7 @@ export const indexGithubRepo = async (projectId: string, githubUrl: string, gith
     const docs = await loadGithubRepo(githubUrl, githubToken);
     const allEmbeddings = await generateEmbeddings(docs)
     await Promise.allSettled(allEmbeddings.map(async (x, index) => {
-        console.log(x,index);
+        // console.log(x,index);
         if (!x) {
             console.log("no embeddings")
             return
@@ -39,7 +39,7 @@ export const indexGithubRepo = async (projectId: string, githubUrl: string, gith
 
          //GPT code
         await prisma.$executeRaw`
-        UPDATE "SourceCodeEmbeddings"
+        UPDATE "SourceCodeEmbedding"
         SET "summaryEmbedding" = ${x.embedding}::vector
         WHERE "id" = ${sourceCodeEmbedding.id}
         `

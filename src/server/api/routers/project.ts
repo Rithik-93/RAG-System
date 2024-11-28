@@ -40,7 +40,7 @@ export const projectRouter = createTRPCRouter({
                 // deletedAt: null
             }
         })
-        console.log(projects)
+        console.log(projects, "projectsssss")
         // if (!projects) {
         //     console.log("No projects found")
         //     return "No porjects found"
