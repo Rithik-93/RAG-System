@@ -11,6 +11,7 @@ import { Dialog, DialogHeader, DialogContent, DialogTitle } from '@/components/u
 import CodeReferences from './code-references';
 import { api } from '@/trpc/react';
 import { toast } from 'sonner';
+import useRefetch from '@/hooks/use-refetch';
 
 const AskQuestion = () => {
     const { project } = useProject();
@@ -22,6 +23,7 @@ const AskQuestion = () => {
     const [loading, setLoading] = React.useState(false);
     const [open, setOpen] = React.useState(false);
     const saveAnswer = api.project.saveAnswer.useMutation();
+    const refetch = useRefetch()
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         setAnswer('')
@@ -58,6 +60,7 @@ const AskQuestion = () => {
                             }, {
                                 onSuccess: () => {
                                     toast.success('Answer saved')
+                                    refetch()
                                 },
                                 onError: () => {
                                     toast.error("failed to save the answer")

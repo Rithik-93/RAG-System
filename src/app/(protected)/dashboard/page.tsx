@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useProject } from '@/hooks/use-project';
 import CommitLog from '@/app/_components/CommitLog';
 import AskQuestion from '@/app/_components/AskQuestion';
+import Meeting from '@/app/_components/Meeting';
 
 const Dashboard = () => {
     const { project } = useProject();
@@ -13,9 +14,6 @@ const Dashboard = () => {
         <div>
             <div>
                 <div className="flex items-center justify-between flex-wrap gap-y-4">
-                    {/* Project ID */}
-                    <h1>{project?.id || "Loading project..."}</h1>
-
                     {/* GitHub Info */}
                     <div className="w-fit rounded-md bg-primary px-4 py-3">
                         <div className="flex items-center">
@@ -38,6 +36,7 @@ const Dashboard = () => {
                                 {/* Ask Question Component */}
                                 <div className="mt-2">
                                     <AskQuestion />
+                                    <Meeting/>
                                 </div>
                             </div>
                         </div>
