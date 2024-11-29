@@ -27,9 +27,14 @@ export const processMeeting = async (meetingUrl: string) => {
         headline: chapter.headline,
         summary: chapter.summary,
     }));
+    
+    // if(!summaries) {
+    //     console.error("Unable to transcript.chapter in assembly.ts file")
+    //     return
+    // }
 
     return {
-        transcript,  
+        // transcript, not required for now  
         summaries,
     };
 };

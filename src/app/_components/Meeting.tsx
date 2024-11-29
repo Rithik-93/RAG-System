@@ -10,11 +10,22 @@ import { api } from '@/trpc/react';
 import { useProject } from '@/hooks/use-project';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 
 const Meeting = () => {
     const [progress, setProgress] = React.useState(0)
     const [isUploading, setIsuploading] = React.useState(false)
-    const { projectId } = useProject()
+    const { project } = useProject()
+
+    const processMeeting = useMutation({
+        mutationFn: async (data: { meetingUrl: string, meetingId: string, projectId: string }) => {
+            const { meetingUrl, meetingId, projectId } = data; // Destructure data
+            const response = await axios.post('/api/meeting', { meetingUrl, meetingId, projectId });
+            return response.data;
+        }
+    });
+
     const uploadMeeting = api.project.uploadMeeting.useMutation()
     const router = useRouter()
     const { getRootProps, getInputProps } = useDropzone({
@@ -24,7 +35,7 @@ const Meeting = () => {
         multiple: false,
         maxSize: 50_000_000,
         onDrop: async acceptedFiles => {
-            if (!projectId) return
+            if (!project) return
             setIsuploading(true)
             console.log(acceptedFiles)
             const file = acceptedFiles[0]
@@ -33,12 +44,13 @@ const Meeting = () => {
             uploadMeeting.mutate({
                 meetingUrl: downloadURL,
                 name: file!.name,
-                projectId,
+                projectId: project.id,
             },
                 {
-                    onSuccess: () => {
+                    onSuccess: (meeting) => {
                         toast.success("Meeting uploaded successfully");
-                        router.push('/meetings')
+                        router.push('/meetings');
+                        processMeeting.mutateAsync({ meetingUrl: downloadURL, meetingId: meeting.id, projectId: project.id })
                     },
                     onError: () => {
                         toast.error("Unable to upload meeting");
