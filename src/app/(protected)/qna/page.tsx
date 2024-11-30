@@ -1,3 +1,4 @@
+'use client'
 import AskQuestion from '@/app/_components/AskQuestion';
 import CodeReferences from '@/app/_components/code-references';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';

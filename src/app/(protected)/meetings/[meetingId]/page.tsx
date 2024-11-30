@@ -1,3 +1,4 @@
+'use client'
 import Issues from './Issues'
 import React from 'react'
 
