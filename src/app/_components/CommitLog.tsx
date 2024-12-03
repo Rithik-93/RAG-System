@@ -32,7 +32,7 @@ const CommitLog = () => {
                 <div className="flex-1 space-y-1">
                   <div className="flex items-center justify-between">
                     <h3 className="text-lg font-semibold">{commit.commitMessage}</h3>
-                    <time className="text-sm text-muted-foreground" dateTime={commit.commitDate.toISOString()}>
+                    <time className="text-sm text-muted-foreground" dateTime={new Date(commit.commitDate).toISOString()}>
                       {new Date(commit.commitDate).toLocaleString('en-US', {
                         year: 'numeric',
                         month: 'short',

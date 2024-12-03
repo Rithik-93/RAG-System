@@ -34,7 +34,7 @@ const Issues = ({ meetingId }: Props) => {
                         </div>
                         <h1>
                             <div className='text-sm leading-6 text-gray-600'>
-                                Meeting on {meeting.createdAt.toLocaleDateString()}
+                            Meeting on {new Date(meeting.createdAt).toLocaleDateString()}
                             </div>
                             <div className='mt-1 text-base font-semibold leading-6 text-gray-900'>
                                 {meeting.name}
@@ -68,7 +68,7 @@ function IssueCard({
                     <DialogHeader>
                         <DialogTitle>{issue.gist} </DialogTitle>
                         <DialogDescription>
-                            {issue.createdAt.toLocaleDateString()}
+                        {new Date(issue.createdAt).toLocaleDateString()}
                         </DialogDescription>
                         <p className='☐ text-gray-600'>
                             {issue.headline}

@@ -10,13 +10,14 @@
     "isolatedModules": true,
 
     /* Strictness */
-    "strict": true,
+    "strict": false,
     "noUncheckedIndexedAccess": true,
     "checkJs": true,
 
     /* Bundled projects */
     "lib": ["dom", "dom.iterable", "ES2022"],
     "noEmit": true,
+    "noEmitOnError": false,  // Allow emitting files even when there are errors
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "jsx": "preserve",

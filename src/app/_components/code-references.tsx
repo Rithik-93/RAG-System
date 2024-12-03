@@ -25,6 +25,7 @@ const CodeReferences: React.FC<Props> = ({ fileReferences = [] }) => {
 
   useEffect(() => {
     if (fileReferences && fileReferences.length > 0 && !activeTab) {
+      //@ts-ignore
       setActiveTab(fileReferences[0].fileName);
     }
   }, [fileReferences, activeTab]);

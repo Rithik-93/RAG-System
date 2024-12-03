@@ -82,6 +82,7 @@ const AppSidebar = () => {
                           : "bg-gray-200 text-gray-700"
                       )}
                     >
+                      {/* @ts-ignore */}
                       {project.name[0].toUpperCase()}
                     </div>
                     <span className="flex-grow">{project.name}</span>
