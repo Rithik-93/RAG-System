@@ -5,7 +5,7 @@ import prisma from 'prisma/src';
 
 export const loadGithubRepo = async (githubUrl: string, githubToken?: string) => {
     const loader = new GithubRepoLoader(githubUrl, {
-        accessToken: githubToken || '',
+        accessToken: githubToken || process.env.GITHUB_TOKEN,
         branch: 'master',
         ignoreFiles: ["package-lock.json", 'yarn.lock', 'pnpm-lock.json', 'bun.lockb'],
         recursive: true,
