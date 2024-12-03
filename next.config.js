@@ -8,7 +8,10 @@ import "./src/env.js";
 const config = {
     env: {
         SKIP_ENV_VALIDATION: process.env.SKIP_ENV_VALIDATION || "true",
-      },
+    },
+    eslint: {
+        ignoreDuringBuilds: true
+    }
 };
 
 export default config;

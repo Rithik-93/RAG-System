@@ -62,7 +62,10 @@ const CodeReferences: React.FC<Props> = ({ fileReferences = [] }) => {
                       customStyle={{ margin: 0 }}
                       className="!bg-gray-900"
                     >
-                      {file.sourceCode}
+                      {file.sourceCode
+                        .replace(/^"|"$/g, "") 
+                        .replace(/\\"/g, '"')  
+                        .trim()}
                     </SyntaxHighlighter>
                   </ScrollArea>
                   {/* <p className="mt-2 text-sm text-muted-foreground">{file.summary}</p> */}

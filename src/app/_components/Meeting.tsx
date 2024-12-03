@@ -15,12 +15,12 @@ import axios from 'axios';
 
 const Meeting = () => {
     const [progress, setProgress] = React.useState(0)
-    const [isUploading, setIsuploading] = React.useState(false)
+    const [isUploading, setIsUploading] = React.useState(false)
     const { project } = useProject()
 
     const processMeeting = useMutation({
         mutationFn: async (data: { meetingUrl: string, meetingId: string, projectId: string }) => {
-            const { meetingUrl, meetingId, projectId } = data; // Destructure data
+            const { meetingUrl, meetingId, projectId } = data; 
             const response = await axios.post('/api/meeting', { meetingUrl, meetingId, projectId });
             return response.data;
         }
@@ -36,31 +36,51 @@ const Meeting = () => {
         maxSize: 50_000_000,
         onDrop: async acceptedFiles => {
             if (!project) return
-            setIsuploading(true)
-            console.log(acceptedFiles)
+            
+            setIsUploading(true)
+            setProgress(0)  // Reset progress at start of upload
+
             const file = acceptedFiles[0]
-            if (!file) return
-            const downloadURL = await uploadFile(file as File, setProgress) as string
-            uploadMeeting.mutate({
-                meetingUrl: downloadURL,
-                name: file!.name,
-                projectId: project.id,
-            },
+            if (!file) {
+                setIsUploading(false)
+                return
+            }
+
+            try {
+                const downloadURL = await uploadFile(file as File, setProgress) as string
+                uploadMeeting.mutate({
+                    meetingUrl: downloadURL,
+                    name: file!.name,
+                    projectId: project.id,
+                },
                 {
-                    onSuccess: (meeting) => {
+                    onSuccess: async (meeting) => {
                         toast.success("Meeting uploaded successfully");
+                        
+                        // Process meeting after successful upload
+                        await processMeeting.mutateAsync({ 
+                            meetingUrl: downloadURL, 
+                            meetingId: meeting.id, 
+                            projectId: project.id 
+                        });
+                        
                         router.push('/meetings');
-                        processMeeting.mutateAsync({ meetingUrl: downloadURL, meetingId: meeting.id, projectId: project.id })
                     },
                     onError: () => {
                         toast.error("Unable to upload meeting");
+                        setIsUploading(false)
                     },
                 })
-            setIsuploading(false)
+            } catch (error) {
+                toast.error("Upload failed");
+                setIsUploading(false)
+            }
         }
     })
+
     return (
-        <Card className="col-span-2 flex flex-col items-center justify-center p-10">
+        <Card className="col-span-2 flex flex-col items-center justify-center p-10" {...getRootProps()}>
+            <input {...getInputProps()} />
             {!isUploading ? (
                 <div>
                     <Presentation className="h-10 w-10 animate-bounce" />
@@ -89,22 +109,8 @@ const Meeting = () => {
                     </p>
                 </div>
             )}
-
-            {isUploading && (
-                <div className="flex items-center justify-center flex-col">
-                    <CircularProgressbar
-                        value={progress}
-                        text={`${progress}%`}
-                        className="size-20"
-                    />
-                    <p className="text-sm text-gray-500 text-center">
-                        Uploading your meeting...
-                    </p>
-                </div>
-            )}
         </Card>
     );
 }
 
 export default Meeting
-
