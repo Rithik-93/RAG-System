@@ -6,9 +6,6 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import prettier from "prettier/standalone";
-import parserTypescript from "prettier/parser-typescript";
-
 
 type FileReference = {
   fileName: string;
@@ -62,10 +59,7 @@ const CodeReferences: React.FC<Props> = ({ fileReferences = [] }) => {
                       customStyle={{ margin: 0 }}
                       className="!bg-gray-900"
                     >
-                      {file.sourceCode
-                        .replace(/^"|"$/g, "") 
-                        .replace(/\\"/g, '"')  
-                        .trim()}
+                      {JSON.parse(file.sourceCode)}
                     </SyntaxHighlighter>
                   </ScrollArea>
                   {/* <p className="mt-2 text-sm text-muted-foreground">{file.summary}</p> */}
