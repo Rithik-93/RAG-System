@@ -7,7 +7,6 @@ import React from 'react';
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner';
 
-
 type FormInput = {
     repoUrl: string
     projectName: string
@@ -17,11 +16,9 @@ type FormInput = {
 const CreatePage = () => {
     const { register, handleSubmit, reset } = useForm<FormInput>()
     const createProject = api.project.createProject.useMutation();
-    console.log("API project structure:", api.project);
     const refetch = useRefetch()
 
     function onSubmit(data: FormInput) {
-        // console.log(data)
         createProject.mutate({
             githubUrl: data.repoUrl,
             name: data.projectName,

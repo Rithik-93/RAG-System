@@ -1,16 +1,21 @@
-// import Link from "next/link";
+import Header from '../components/Header'
+import Hero from '../components/Hero'
+import Features from '../components/Features'
+import HowItWorks from '../components/How-it-works'
+import CTA from '../components/CTA'
+import Footer from '../components/Footer'
 
-// import { LatestPost } from "@/app/_components/post";
-// import { api, HydrateClient } from "@/trpc/server";
-
-export default async function Home() {
-//   const hello = await api.post.hello({ text: "from tRPC" });
-
-//   void api.post.getLatest.prefetch();
-
+export default function Home() {
   return (
-    <div>
-        HIIII
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-grow">
+        <Hero />
+        <Features />
+        <HowItWorks />
+        <CTA />
+      </main>
+      <Footer />
     </div>
-  );
+  )
 }

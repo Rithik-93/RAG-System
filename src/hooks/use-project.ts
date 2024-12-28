@@ -3,7 +3,7 @@ import { api } from '@/trpc/react';
 import { useLocalStorage } from 'usehooks-ts'
 
 export const useProject = () => {
-    console.log("API project structure:", api.project);
+    // console.log("API project structure:", api.project);
 
     const { data, isLoading, error } = api.project.getProject.useQuery();
     const projects = data ?? []; 

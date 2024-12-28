@@ -21,7 +21,7 @@ export const loadGithubRepo = async (githubUrl: string, githubToken?: string) =>
 export const indexGithubRepo = async (projectId: string, githubUrl: string, githubToken?: string) => {
     const docs = await loadGithubRepo(githubUrl, githubToken);
     const allEmbeddings = await generateEmbeddings(docs)
-    await Promise.allSettled(allEmbeddings.map(async (x, index) => {
+    await Promise.allSettled(allEmbeddings.map(async (x) => {
         // console.log(x,index);
         if (!x) {
             console.log("no embeddings")

@@ -46,26 +46,28 @@ export const summariseCommitAI = async (diff: string) => {
 }
 
 export async function summariseCode(doc: Document) {
-    // console.log("getting summary for", doc.metadata.source);
-    try{
+    console.log("getting summary for----------------------------------------------------------------", doc.metadata.source);
+    // await new Promise((resolve) => setTimeout(resolve, 100));
+    try {
         const code = doc.pageContent.slice(0, 1000);
-    const response = await model.generateContent([
-              `You are an intelligent senior software engineer who specialises in onboarding junior software engineers onto projects`,
-              `You are onboarding a junior software engineer and explaining to them the purpose of the $(doc.metadata.source] file
-Here is the code:
----
-${code}
----
-                 Give a summary no more than 100 words of the code above
+        const response = await model.generateContent([
+            `You are an intelligent senior software engineer who specialises in onboarding junior software engineers onto projects`,
+            `You are onboarding a junior software engineer and explaining to them the purpose of the $(doc.metadata.source] file
+            Here is the code:
+            ---
+            ${code}
+            ---
+            Give a summary no more than 100 words of the code above
     `]);
+        console.log("success for---------------------------------------------------------------------", doc.metadata.source);
+        return response.response.text()
 
-    return response.response.text()
-    
-    } catch(e) {
+    } catch (e) {
         console.error(e, "error while sumarising code")
+        console.log("failed for-------------------------------------------------------------------", doc.metadata.source);
         return ""
     }
-    
+
 
 }
 

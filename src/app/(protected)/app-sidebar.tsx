@@ -13,10 +13,13 @@ import {
   SidebarGroupContent,
   SidebarMenu,
   SidebarMenuItem,
-  SidebarMenuButton
+  SidebarMenuButton,
+  SidebarMenuSkeleton
 } from "@/components/ui/sidebar"
 import { cn } from "@/lib/utils"
 import { useProject } from "@/hooks/use-project"
+import { Skeleton } from "@/components/ui/skeleton"
+import { Loader } from 'rsuite';
 
 const items = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
@@ -26,7 +29,14 @@ const items = [
 ]
 
 const AppSidebar = () => {
-  const { projectId, projects = [], setProjectId } = useProject()
+  const { projectId, projects, setProjectId, isLoading } = useProject()
+
+  // const isLoading = !projects
+  // if(isLoading) {
+  //   return (
+  //     <Loader inverse center content="loading your projects..." />
+  //   )
+  // }
 
   return (
     <Sidebar collapsible="icon" variant="floating" className="border-r border-gray-200 bg-white">
@@ -63,33 +73,48 @@ const AppSidebar = () => {
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {projects.map((project) => (
-                <SidebarMenuItem key={project.id}>
-                  <SidebarMenuButton
-                    onClick={() => setProjectId(project.id)}
-                    className={cn(
-                      "flex items-center space-x-3 px-4 py-2 text-sm font-medium rounded-md transition-colors duration-150 ease-in-out w-full",
-                      project.id === projectId
-                        ? "bg-blue-50 text-blue-700"
-                        : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                    )}
-                  >
-                    <div
+              {isLoading ? (
+                <>
+                  {[...Array(3)].map((_, index) => (
+                    <SidebarMenuItem key={index}>
+                      <SidebarMenuSkeleton showIcon />
+                    </SidebarMenuItem>
+                  ))}
+                </>
+              ) : projects && projects.length > 0 ? (
+                projects.map((project) => (
+                  <SidebarMenuItem key={project.id}>
+                    <SidebarMenuButton
+                      onClick={() => setProjectId(project.id)}
                       className={cn(
-                        "flex items-center justify-center w-8 h-8 rounded-md text-sm font-semibold",
+                        "flex items-center space-x-3 px-4 py-2 text-sm font-medium rounded-md transition-colors duration-150 ease-in-out w-full",
                         project.id === projectId
-                          ? "bg-blue-200 text-blue-700"
-                          : "bg-gray-200 text-gray-700"
+                          ? "bg-blue-50 text-blue-700"
+                          : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                       )}
                     >
-                      {/* @ts-ignore */}
-                      {project.name[0].toUpperCase()}
-                    </div>
-                    <span className="flex-grow">{project.name}</span>
-                    {project.id === projectId && <ChevronRight className="h-4 w-4" />}
-                  </SidebarMenuButton>
+                      <div
+                        className={cn(
+                          "flex items-center justify-center w-8 h-8 rounded-md text-sm font-semibold",
+                          project.id === projectId
+                            ? "bg-blue-200 text-blue-700"
+                            : "bg-gray-200 text-gray-700"
+                        )}
+                      >
+                        {project.name[0].toUpperCase()}
+                      </div>
+                      <span className="flex-grow">{project.name}</span>
+                      {project.id === projectId && <ChevronRight className="h-4 w-4" />}
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))
+              ) : (
+                <SidebarMenuItem>
+                  <div className="px-4 py-2 text-sm text-gray-500">
+                    No projects available
+                  </div>
                 </SidebarMenuItem>
-              ))}
+              )}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
