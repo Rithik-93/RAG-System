@@ -72,10 +72,10 @@ const AskQuestion = () => {
     };
 
     return (
-        <div className="max-w-4xl mx-auto p-4">
+        <div className="w-full min-w-full flex justify-center items-center p-4">
             <Card className="w-full">
                 <CardHeader>
-                    <CardTitle className="text-2xl font-bold">Ask a Question</CardTitle>
+                    <CardTitle className="text-2xl font-bold flex justify-center items-center">Ask a Question</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <form onSubmit={onSubmit} className="space-y-4">

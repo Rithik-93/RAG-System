@@ -35,7 +35,6 @@ export async function askQuestion(question: string, projectId: string) {
         const { textStream } = await streamText({
             model: google('gemini-1.5-flash'),
             prompt: `
-            
 You are an AI code assistant who answers questions about the codebase. Your target audience is a technical intern.  
 AI assistant is a brand new, powerful, human-like artificial intelligence.  
 The traits of AI include expert knowledge, helpfulness, cleverness, and articulateness.  
@@ -72,3 +71,25 @@ Answer in markdown syntax, with code snippets if needed. Be as detailed as possi
         fileReferences: result
     }
 }
+
+// import { Kafka } from 'kafkajs'
+
+// const kafka = new Kafka({
+//     clientId: 'my-app',
+//     brokers: ['localhost:9092']
+// })
+// const producer = kafka.producer()
+
+
+// export async function produceQuestion({ question, projectId }: { question: string, projectId: string }) {
+//     await producer.connect()
+//     const payload = JSON.stringify({ question, projectId });
+//     await producer.send({
+//         topic: 'test-topic',
+//         messages: [
+//             { value: payload},
+//         ],
+//     })
+// }
+
+// produceQuestion({ question: 'How do I change the home page?', projectId: '123' })

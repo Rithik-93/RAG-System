@@ -4,19 +4,17 @@ import Link from 'next/link';
 import { useProject } from '@/hooks/use-project';
 import CommitLog from '@/app/_components/CommitLog';
 import AskQuestion from '@/app/_components/AskQuestion';
-import Meeting from '@/app/_components/Meeting';
 
 const Dashboard = () => {
-    const { project } = useProject();
-    console.log(project, "project");
+    const { project, projects } = useProject();
 
     return (
-        <div>
+        <div className='w-full'>
             <div>
-                <div className="flex items-center justify-between flex-wrap gap-y-4">
+                <div className="flex items-center justify-center flex-wrap gap-y-4">
                     {/* GitHub Info */}
-                    <div className="w-fit rounded-md bg-primary px-4 py-3">
-                        <div className="flex items-center">
+                    <div className="w-full rounded-md bg-slate-900 px-4 py-3">
+                        <div className="w-full">
                             <Github className="size-5 text-white" />
                             <div className="ml-2">
                                 <p className="text-sm font-medium text-white">
@@ -34,24 +32,13 @@ const Dashboard = () => {
                                     )}
                                 </p>
                                 {/* Ask Question Component */}
-                                <div className="mt-2">
+                                <div className="mt-2 w-full flex justify-center items-center">
                                     <AskQuestion />
-                                    <Meeting/>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                {/* Additional Content */}
-                <div className="mt-4">
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-5">
-                        {/* Placeholder cards */}
-                        <div>Question card</div>
-                        <div>Meeting card</div>
-                    </div>
-                </div>
-
                 {/* Commit Log */}
                 <CommitLog />
             </div>

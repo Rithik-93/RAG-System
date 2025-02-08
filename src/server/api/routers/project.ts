@@ -11,6 +11,10 @@ export const projectRouter = createTRPCRouter({
             githubToken: z.string().optional()
         })
     ).mutation(async ({ ctx, input }) => {
+        console.log(input);
+         
+        console.log(((input.githubUrl, input.name, ctx.user.userId!)),'----------------------');
+        (ctx.user.userId)
         const project = await ctx.db.project.create({
             data: {
                 githubUrl: input.githubUrl,

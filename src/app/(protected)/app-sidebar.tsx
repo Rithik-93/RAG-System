@@ -18,8 +18,8 @@ import {
 } from "@/components/ui/sidebar"
 import { cn } from "@/lib/utils"
 import { useProject } from "@/hooks/use-project"
-import { Skeleton } from "@/components/ui/skeleton"
-import { Loader } from 'rsuite';
+import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
 
 const items = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
@@ -30,6 +30,12 @@ const items = [
 
 const AppSidebar = () => {
   const { projectId, projects, setProjectId, isLoading } = useProject()
+  const router = useRouter()
+
+  function projectsOnclick(projectId: string) {
+    setProjectId(projectId)
+    router.push('/dashboard')
+  }
 
   // const isLoading = !projects
   // if(isLoading) {
@@ -41,8 +47,11 @@ const AppSidebar = () => {
   return (
     <Sidebar collapsible="icon" variant="floating" className="border-r border-gray-200 bg-white">
       <SidebarHeader className="p-4 flex items-center space-x-2">
-        <Image src="/logo.svg" alt="Logo" width={32} height={32} />
-        <span className="font-semibold text-lg">Your App</span>
+        <div className="flex items-center">
+          <Link href="/" className="text-2xl font-bold text-primary font-poppins">
+            RepoScan
+          </Link>
+        </div>
       </SidebarHeader>
       <SidebarContent className="py-4">
         <SidebarGroup>
@@ -54,8 +63,8 @@ const AppSidebar = () => {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <Link 
-                      href={item.url} 
+                    <Link
+                      href={item.url}
                       className="flex items-center space-x-3 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-md transition-colors duration-150 ease-in-out"
                     >
                       <item.icon className="h-5 w-5" />
@@ -64,6 +73,7 @@ const AppSidebar = () => {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+              <Button><Link href={'/create'}>Create</Link></Button>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -85,7 +95,7 @@ const AppSidebar = () => {
                 projects.map((project) => (
                   <SidebarMenuItem key={project.id}>
                     <SidebarMenuButton
-                      onClick={() => setProjectId(project.id)}
+                      onClick={() => projectsOnclick(project.id)}
                       className={cn(
                         "flex items-center space-x-3 px-4 py-2 text-sm font-medium rounded-md transition-colors duration-150 ease-in-out w-full",
                         project.id === projectId

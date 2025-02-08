@@ -1,7 +1,12 @@
+'use client'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { useUser } from '@clerk/nextjs'
+import { SignOutButton } from '@clerk/nextjs'
+
 
 export default function Header() {
+  const { isSignedIn } = useUser()
   return (
     <header className="border-b bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,10 +28,26 @@ export default function Header() {
             </Link>
           </nav>
           <div className="flex items-center">
-            <Button variant="outline" className="mr-4 border-primary text-primary hover:bg-primary hover:text-white">
-              Log in
-            </Button>
-            <Button className="bg-primary text-white hover:bg-primary/90">Sign up</Button>
+            {isSignedIn ? (
+              <>
+                <SignOutButton>
+                  <Button variant="outline" className="mr-4 border-primary text-primary hover:bg-primary hover:text-white">
+                    Log out
+                  </Button>
+                </SignOutButton>
+              </>
+            ) : (
+              <>
+                <Link href="/dashboard">
+                  <Button variant="outline" className="mr-4 border-primary text-primary hover:bg-primary hover:text-white">
+                    Log in
+                  </Button>
+                </Link>
+                <Link href="/dashboard">
+                  <Button className="bg-primary text-white hover:bg-primary/90">Sign up</Button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>

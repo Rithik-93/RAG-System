@@ -13,7 +13,8 @@ const SyncUser = async() => {
     if(!user.emailAddresses[0]?.emailAddress) {
       return notFound()
     }
-
+    console.log('asdasdsadsd');
+    
     await prisma.user.upsert({
       where: {
         emailAddress: user.emailAddresses[0]?.emailAddress ?? ""

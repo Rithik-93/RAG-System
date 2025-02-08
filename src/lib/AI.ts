@@ -67,8 +67,6 @@ export async function summariseCode(doc: Document) {
         console.log("failed for-------------------------------------------------------------------", doc.metadata.source);
         return ""
     }
-
-
 }
 
 export async function generateEmbedding(summary: string) {
