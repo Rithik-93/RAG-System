@@ -4,9 +4,15 @@ import Link from 'next/link';
 import { useProject } from '@/hooks/use-project';
 import CommitLog from '@/app/_components/CommitLog';
 import AskQuestion from '@/app/_components/AskQuestion';
+import { useRouter } from 'next/navigation';
 
 const Dashboard = () => {
     const { project, projects } = useProject();
+    const router = useRouter();
+
+    if(projects.length === 0) {
+        router.push('/create');
+    }
 
     return (
         <div className='w-full'>
