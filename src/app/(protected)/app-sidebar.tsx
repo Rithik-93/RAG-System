@@ -1,7 +1,6 @@
 'use client'
 
 import Link from "next/link"
-import Image from "next/image"
 import { LayoutDashboard, Bot, Presentation, CreditCard, ChevronRight } from 'lucide-react'
 
 import {
@@ -23,9 +22,9 @@ import { useRouter } from "next/navigation"
 
 const items = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
-  { title: "Q&A", url: "/qna", icon: Bot },
-  { title: "Meetings", url: "/meetings", icon: Presentation },
-  { title: "Billing", url: "/billing", icon: CreditCard }
+  { title: "Q&A", url: "/dashboard", icon: Bot },
+  { title: "Meetings", url: "/dashboard", icon: Presentation },
+  { title: "Billing", url: "/dashboard", icon: CreditCard }
 ]
 
 const AppSidebar = () => {
